@@ -1,7 +1,5 @@
 import { clerkClient } from "@clerk/nextjs/server";
-
-const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "http://localhost:3000";
+import { getBaseUrl } from "@/lib/config/app-url";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -33,7 +31,7 @@ export const invitationService = {
     const client = await clerkClient();
     await client.invitations.createInvitation({
       emailAddress: email,
-      redirectUrl: `${APP_URL}/auth/redirect`,
+      redirectUrl: `${getBaseUrl()}/auth/redirect`,
       publicMetadata: {
         role: "DOCTOR",
         doctorId,
@@ -47,7 +45,7 @@ export const invitationService = {
     const client = await clerkClient();
     await client.invitations.createInvitation({
       emailAddress: email,
-      redirectUrl: `${APP_URL}/auth/redirect`,
+      redirectUrl: `${getBaseUrl()}/auth/redirect`,
       publicMetadata: {
         role: "ADMIN",
         adminName: name,
